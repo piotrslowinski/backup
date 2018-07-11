@@ -1,12 +1,10 @@
 package com.piotrslowinski.model.repositories;
 
 import com.piotrslowinski.model.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface UserRepository {
-
-    User findById(Long id);
-
-    void save(User user);
-
+@Repository
+public interface UserRepository extends JpaRepository<User, Long> {
 
 }

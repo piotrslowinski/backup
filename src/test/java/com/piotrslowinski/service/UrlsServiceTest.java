@@ -5,6 +5,7 @@ import com.piotrslowinski.model.Survey;
 import com.piotrslowinski.model.Token;
 import com.piotrslowinski.model.UrlAddress;
 import com.piotrslowinski.model.User;
+import com.piotrslowinski.model.generator.UrlGenerator;
 import com.piotrslowinski.model.repositories.SurveyRepository;
 import com.piotrslowinski.model.repositories.TokenRepository;
 import com.piotrslowinski.model.repositories.UserRepository;
@@ -25,6 +26,7 @@ public class UrlsServiceTest {
     private UserRepository userRepository;
     private SurveyRepository surveyRepository;
     private TokenRepository tokenRepository;
+    private UrlGenerator urlGenerator = new UrlGenerator();
 
     private User user1;
 
@@ -40,14 +42,14 @@ public class UrlsServiceTest {
         surveyRepository = Mockito.mock(SurveyRepository.class);
         tokenRepository = Mockito.mock(TokenRepository.class);
 
-        service = new UrlService(userRepository, tokenRepository, surveyRepository);
+        service = new UrlService(userRepository, tokenRepository, surveyRepository, urlGenerator);
     }
 
     @Test
     public void shouldReturnUrl() {
         //given
-        Mockito.when(userRepository.findById(1L)).thenReturn(user1);
-        Mockito.when(surveyRepository.get(1L)).thenReturn(survey1);
+        Mockito.when(userRepository.findById(1L)).thenReturn(Optional.ofNullable(user1));
+        Mockito.when(surveyRepository.getOne(1L)).thenReturn(survey1);
 
         //when
         UrlAddress address = service.createUniqueSurveyUrl(1L, 1L);
@@ -59,8 +61,8 @@ public class UrlsServiceTest {
     @Test
     public void shouldNotReturnSameUrlTwice() {
         //given
-        Mockito.when(userRepository.findById(1L)).thenReturn(user1);
-        Mockito.when(surveyRepository.get(1L)).thenReturn(survey1);
+        Mockito.when(userRepository.findById(1L)).thenReturn(Optional.ofNullable(user1));
+        Mockito.when(surveyRepository.getOne(1L)).thenReturn(survey1);
 
         //when
         UrlAddress address1 = service.createUniqueSurveyUrl(1L, 1L);
@@ -73,8 +75,8 @@ public class UrlsServiceTest {
     @Test
     public void shouldDeactivateOldToken() {
         //given
-        Mockito.when(userRepository.findById(1L)).thenReturn(user1);
-        Mockito.when(surveyRepository.get(1L)).thenReturn(survey1);
+        Mockito.when(userRepository.findById(1L)).thenReturn(Optional.ofNullable(user1));
+        Mockito.when(surveyRepository.getOne(1L)).thenReturn(survey1);
 
         //when
         UrlAddress address1 = service.createUniqueSurveyUrl(1L, 1L);

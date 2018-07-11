@@ -1,10 +1,10 @@
 package com.piotrslowinski.model.repositories;
 
 import com.piotrslowinski.model.Survey;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface SurveyRepository {
+@Repository
+public interface SurveyRepository extends JpaRepository<Survey, Long> {
 
-    Survey get(Long surveyId);
-
-    void save(Survey survey);
 }

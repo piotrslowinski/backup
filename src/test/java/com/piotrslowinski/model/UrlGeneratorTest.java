@@ -1,6 +1,5 @@
 package com.piotrslowinski.model;
 
-import com.piotrslowinski.model.generator.LocalHostStrategy;
 import com.piotrslowinski.model.generator.UrlGenerator;
 import org.junit.Test;
 
@@ -11,7 +10,7 @@ import static org.junit.Assert.assertTrue;
 
 public class UrlGeneratorTest {
 
-    private UrlGenerator generator = new UrlGenerator(new LocalHostStrategy());
+    private UrlGenerator generator = new UrlGenerator();
 
     private User user = new User();
 

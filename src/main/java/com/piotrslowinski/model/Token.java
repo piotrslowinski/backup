@@ -1,12 +1,13 @@
 package com.piotrslowinski.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
 @Table(name = "tokens")
-public class Token {
+public class Token implements Serializable {
 
     @Id
     private String value;
@@ -19,7 +20,7 @@ public class Token {
     @ManyToOne
     private User user;
 
-    @OneToOne
+    @ManyToOne
     private Survey survey;
 
 

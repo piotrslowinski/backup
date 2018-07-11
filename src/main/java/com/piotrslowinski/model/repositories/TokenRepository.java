@@ -1,10 +1,10 @@
 package com.piotrslowinski.model.repositories;
 
 import com.piotrslowinski.model.Token;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface TokenRepository {
+@Repository
+public interface TokenRepository extends JpaRepository<Token, String> {
 
-    Token get(String tokenValue);
-
-    void save(Token token);
 }

@@ -1,12 +1,16 @@
 package com.piotrslowinski.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 @Table(name = "surveys")
-public class Survey {
+public class Survey implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,7 +18,7 @@ public class Survey {
 
     private String name;
 
-    @ManyToMany
+    @OneToMany(mappedBy = "survey", fetch = FetchType.EAGER)
     private List<Token> tokens = new ArrayList<>();
 
     public Survey() {

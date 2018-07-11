@@ -2,6 +2,7 @@ package com.piotrslowinski.ui.controllers;
 
 import com.piotrslowinski.api.SurveyService;
 import com.piotrslowinski.model.Survey;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -11,6 +12,7 @@ public class SurveyController {
 
     private SurveyService surveyService;
 
+    @Autowired
     public SurveyController(SurveyService surveyService) {
         this.surveyService = surveyService;
     }
@@ -20,10 +22,9 @@ public class SurveyController {
         surveyService.createSurvey(name);
     }
 
-    @GetMapping("/{tokenValue}")
-    public Survey getSurvey(@PathVariable String tokenValue) {
-
-        return surveyService.getSurvey(tokenValue);
+    @GetMapping("/{surveyId}")
+    public Survey getSurveyById(@PathVariable Long surveyId) {
+        return surveyService.findSurvey(surveyId);
     }
 
 }
