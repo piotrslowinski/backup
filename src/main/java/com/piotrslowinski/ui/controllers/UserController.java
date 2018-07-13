@@ -2,6 +2,7 @@ package com.piotrslowinski.ui.controllers;
 
 import com.piotrslowinski.api.UrlService;
 import com.piotrslowinski.api.UserService;
+import com.piotrslowinski.model.SurveyUrlAddress;
 import com.piotrslowinski.model.UrlAddress;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

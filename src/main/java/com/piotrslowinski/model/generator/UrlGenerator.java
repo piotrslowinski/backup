@@ -1,14 +1,11 @@
 package com.piotrslowinski.model.generator;
 
-import com.piotrslowinski.model.Survey;
-import com.piotrslowinski.model.Token;
-import com.piotrslowinski.model.UrlAddress;
-import com.piotrslowinski.model.User;
+import com.piotrslowinski.model.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UrlGenerator {
+public class UrlGenerator implements AbstractUrlGenerator {
 
     @Value("${server.port}")
     private String port;
@@ -16,15 +13,15 @@ public class UrlGenerator {
     @Value("${server.address}")
     private String address;
 
-
-    public UrlAddress generate(User user, Survey survey, Token token) {
-        String url = String.format("http://%s:%s/url/%s", address, port, token.getValue());
-
-        return new UrlAddress(url);
+    public UrlAddress generateUrlAddress(Token token, UrlTargetType type) {
+        switch (type) {
+            case SURVEY:
+                return new SurveyUrlAddress(token, port, address);
+            case LOGIN:
+                return new LoginUrlAddress(token, port, address);
+            default:
+                return null;
+        }
     }
 
-    public String getUrl() {
-        String url = String.format("http://%s:%s/url/", address, port);
-        return url;
-    }
 }

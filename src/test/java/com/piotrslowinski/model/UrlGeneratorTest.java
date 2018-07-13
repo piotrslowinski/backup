@@ -1,5 +1,6 @@
 package com.piotrslowinski.model;
 
+import com.piotrslowinski.model.generator.AbstractUrlGenerator;
 import com.piotrslowinski.model.generator.UrlGenerator;
 import org.junit.Test;
 
@@ -10,7 +11,7 @@ import static org.junit.Assert.assertTrue;
 
 public class UrlGeneratorTest {
 
-    private UrlGenerator generator = new UrlGenerator();
+    private AbstractUrlGenerator generator = new UrlGenerator();
 
     private User user = new User();
 
@@ -25,7 +26,7 @@ public class UrlGeneratorTest {
         token1 = createTokenForUser(user, survey);
 
         //when
-        UrlAddress address1 = generator.generate(user, survey, token1);
+        UrlAddress address1 = generator.generateUrlAddress(token1, UrlTargetType.SURVEY);
 
         //then
         assertFalse(address1.getValue().isEmpty());
@@ -38,8 +39,8 @@ public class UrlGeneratorTest {
         token2 = createTokenForUser(user, survey);
 
         //when
-        UrlAddress address1 = generator.generate(user, survey, token1);
-        UrlAddress address2 = generator.generate(user, survey, token2);
+        UrlAddress address1 = generator.generateUrlAddress(token1, UrlTargetType.SURVEY);
+        UrlAddress address2 = generator.generateUrlAddress(token2, UrlTargetType.SURVEY);
 
         //then
         assertFalse(address1.getValue().equals(address2.getValue()));

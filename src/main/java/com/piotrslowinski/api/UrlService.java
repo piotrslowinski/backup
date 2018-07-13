@@ -1,6 +1,8 @@
 package com.piotrslowinski.api;
 
 import com.piotrslowinski.model.*;
+import com.piotrslowinski.model.generator.AbstractUrlGenerator;
+import com.piotrslowinski.model.UrlTargetType;
 import com.piotrslowinski.model.generator.UrlGenerator;
 import com.piotrslowinski.model.repositories.SurveyRepository;
 import com.piotrslowinski.model.repositories.TokenRepository;
@@ -17,10 +19,11 @@ public class UrlService {
 
     private SurveyRepository surveyRepository;
 
-    private UrlGenerator urlGenerator;
+    private AbstractUrlGenerator urlGenerator;
 
     @Autowired
-    public UrlService(UserRepository userRepository, TokenRepository tokenRepository, SurveyRepository surveyRepository, UrlGenerator urlGenerator) {
+    public UrlService(UserRepository userRepository, TokenRepository tokenRepository,
+                      SurveyRepository surveyRepository, AbstractUrlGenerator urlGenerator) {
         this.userRepository = userRepository;
         this.tokenRepository = tokenRepository;
         this.surveyRepository = surveyRepository;
@@ -36,7 +39,7 @@ public class UrlService {
         userRepository.save(user);
         tokenRepository.save(token);
 
-        return generate(user, survey, token);
+        return generate(token);
     }
 
     private void synchronizeUserTokens(User user) {
@@ -49,11 +52,7 @@ public class UrlService {
         user.getTokens().stream().forEach((token -> token.setActive(false)));
     }
 
-    private UrlAddress generate(User user, Survey survey, Token token) {
-        return urlGenerator.generate(user, survey, token);
-    }
-
-    public String getUrl() {
-        return urlGenerator.getUrl();
+    private UrlAddress generate(Token token) {
+        return urlGenerator.generateUrlAddress(token, UrlTargetType.SURVEY);
     }
 }

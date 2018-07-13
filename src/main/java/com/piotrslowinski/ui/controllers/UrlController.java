@@ -27,9 +27,4 @@ public class UrlController {
 
         return surveyService.getSurvey(tokenValue);
     }
-
-    @GetMapping
-    public String getUrl() {
-        return urlService.getUrl();
-    }
 }
