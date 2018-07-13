@@ -1,5 +1,6 @@
 package com.piotrslowinski.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -18,6 +19,7 @@ public class Survey implements Serializable {
 
     private String name;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "survey", fetch = FetchType.EAGER)
     private List<Token> tokens = new ArrayList<>();
 

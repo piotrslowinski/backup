@@ -21,7 +21,7 @@ public class SurveyService {
     }
 
     public Survey getSurvey(String tokenValue) {
-        Token token = tokenRepository.findById(tokenValue).get();
+        Token token = tokenRepository.findByValue(tokenValue).get();
         if (!token.isValid()) {
             throw new RuntimeException("the link has expired");
         }

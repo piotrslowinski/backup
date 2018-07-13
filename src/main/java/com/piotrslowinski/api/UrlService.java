@@ -27,7 +27,6 @@ public class UrlService {
         this.urlGenerator = urlGenerator;
     }
 
-
     public UrlAddress createUniqueSurveyUrl(Long userId, Long surveyId) {
         User user = userRepository.findById(userId).get();
         Survey survey = surveyRepository.getOne(surveyId);

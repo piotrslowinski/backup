@@ -1,8 +1,12 @@
 package com.piotrslowinski.model;
 
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Objects;
 import java.util.UUID;
 
 @Entity
@@ -10,6 +14,10 @@ import java.util.UUID;
 public class Token implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(columnDefinition = "char(255)")
     private String value;
 
     @Column(name = "expiry_date")
@@ -17,11 +25,15 @@ public class Token implements Serializable {
 
     private boolean active;
 
+    @NotFound(
+            action = NotFoundAction.IGNORE)
     @ManyToOne
-    private User user;
+    private User user = new User();
 
+    @NotFound(
+            action = NotFoundAction.IGNORE)
     @ManyToOne
-    private Survey survey;
+    private Survey survey = new Survey();
 
 
     public Token() {
@@ -81,5 +93,26 @@ public class Token implements Serializable {
 
     public void setSurvey(Survey survey) {
         this.survey = survey;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Token)) return false;
+        Token token = (Token) o;
+        return Objects.equals(getValue(), token.getValue());
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(getValue());
+    }
+
+    @Override
+    public String toString() {
+        return "Token{" +
+                "value='" + value + '\'' +
+                '}';
     }
 }
