@@ -35,6 +35,7 @@ public class User implements Serializable {
     public User(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.email = String.format("%s@%s.com",firstName, lastName);
     }
 
     public void assignToSurvey(Survey survey) {
