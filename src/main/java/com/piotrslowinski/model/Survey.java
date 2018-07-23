@@ -6,7 +6,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
@@ -22,6 +24,9 @@ public class Survey implements Serializable {
     @JsonIgnore
     @OneToMany(mappedBy = "survey", fetch = FetchType.EAGER)
     private List<Token> tokens = new ArrayList<>();
+
+    @ManyToMany
+    private Set<Question> questions = new HashSet<>();
 
     public Survey() {
     }
@@ -52,5 +57,13 @@ public class Survey implements Serializable {
 
     public void setTokens(List<Token> tokens) {
         this.tokens = tokens;
+    }
+
+    public Set<Question> getQuestions() {
+        return questions;
+    }
+
+    public void setQuestions(Set<Question> questions) {
+        this.questions = questions;
     }
 }
